@@ -40,7 +40,7 @@ A recomendação de **COMPRA** é emitida somente quando os 3 critérios são at
 
 BOVESPA_analyzer/
 ├── app.py          # Painel Streamlit
-├── scraper.py      # Web scraping com Playwright
+├── scraper.py      # Web scraping 
 ├── analyzer.py     # Lógica de análise fundamentalista
 └── requirements.txt
 
