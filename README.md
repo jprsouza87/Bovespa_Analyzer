@@ -1,6 +1,5 @@
 # 📊 Analisador Fundamentalista — B3
 
-https://b3analyzer.streamlit.app/
 
 Aplicação web para análise fundamentalista de ações listadas na B3 (Bolsa de Valores do Brasil).
 Busca dados reais diretamente do [Fundamentus](https://www.fundamentus.com.br/) via web scraping e aplica critérios de valor para recomendar ou não a compra de uma ação.
