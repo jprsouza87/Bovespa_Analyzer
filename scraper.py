@@ -102,7 +102,9 @@ def buscar_por_nome(termo: str):
 
             papel = colunas[0].text.strip()
 
-            resultados.append(papel)
+            nome  = colunas[2].text.strip()  
+
+            resultados.append({"papel": papel, "nome": nome})
 
     driver.quit()
 

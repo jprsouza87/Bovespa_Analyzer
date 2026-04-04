@@ -30,29 +30,33 @@ if "resultados_busca" not in st.session_state:
 
 # --- Busca por nome ---
 st.markdown("#### 🔍 Buscar empresa por nome")
-col_busca, col_btn_busca = st.columns([4, 1])
+col_busca, col_btn_busca, col_btn_limpar = st.columns([4, 1, 1])
 with col_busca:
     termo = st.text_input("Nome", placeholder="ex: petrobras, itau, vale",
                           label_visibility="collapsed", key="busca_nome")
 with col_btn_busca:
     buscar = st.button("Buscar", use_container_width=True)
+with col_btn_limpar:
+    limpar = st.button("🗑️ Limpar", use_container_width=True)
+
+if limpar:
+    st.session_state.ticker_selecionado = ""
+    st.session_state.resultados_busca = []
+    st.rerun()
 
 if buscar and termo:
     with st.spinner("Buscando empresas..."):
         try:
             st.session_state.resultados_busca = buscar_por_nome(termo)
-            st.session_state.ticker_selecionado = ""  # limpa seleção anterior
+            st.session_state.ticker_selecionado = ""
         except Exception as e:
             st.error(str(e))
 
 if st.session_state.resultados_busca:
-    escolha = st.selectbox(
-    "Selecione o papel:",
-    st.session_state.resultados_busca
-)
-
+    opcoes = {f"{r['papel']} — {r['nome']}": r["papel"] for r in st.session_state.resultados_busca}
+    escolha = st.selectbox("Selecione o papel:", list(opcoes.keys()))
     if escolha:
-        st.session_state.ticker_selecionado = escolha
+        st.session_state.ticker_selecionado = opcoes[escolha]
 
 st.divider()
 
@@ -60,13 +64,12 @@ st.divider()
 st.markdown("#### 📊 Ou digite o código diretamente")
 ticker_direto = st.text_input(
     "Código",
-    value=st.session_state.ticker_selecionado,  # preenche automaticamente
+    value=st.session_state.ticker_selecionado,
     placeholder="ex: PETR4, ITUB4, WEGE3",
     label_visibility="collapsed",
     key="input_ticker"
 )
 
-# ticker final — direto tem prioridade
 ticker = ticker_direto if ticker_direto else st.session_state.ticker_selecionado
 
 if st.button("Analisar", use_container_width=True) and ticker:
