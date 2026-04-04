@@ -32,7 +32,6 @@ A recomendação de **COMPRA** é emitida somente quando os 3 critérios são at
 ## 🛠️ Tecnologias
 
 - [Python 3.x](https://www.python.org/)
-- [Playwright](https://playwright.dev/python/) — web scraping dinâmico
 - [Streamlit](https://streamlit.io/) — interface web
 
 ---
