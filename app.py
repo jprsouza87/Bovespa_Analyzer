@@ -46,10 +46,13 @@ if buscar and termo:
             st.error(str(e))
 
 if st.session_state.resultados_busca:
-    opcoes = {f"{r['papel']} — {r['nome']}": r["papel"] for r in st.session_state.resultados_busca}
-    escolha = st.selectbox("Selecione o papel:", list(opcoes.keys()))
+    escolha = st.selectbox(
+    "Selecione o papel:",
+    st.session_state.resultados_busca
+)
+
     if escolha:
-        st.session_state.ticker_selecionado = opcoes[escolha]
+        st.session_state.ticker_selecionado = escolha
 
 st.divider()
 

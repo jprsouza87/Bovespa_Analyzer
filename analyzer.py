@@ -1,30 +1,36 @@
-# analyzer.py
-
 def analisar(dados: dict) -> dict:
-    
-    # 1. Valor Patrimonial por Ação (VPA)
-    vpa = dados["patrimonio_liq"] / dados["num_acoes"]
-    preco = dados["cotacao"]
-    vpa_ok = preco <= 1.5 * vpa  
 
-    # 2. Endividamento (Dívida Bruta / PL <= 3x)
-    endividamento = dados["div_br_patrim"]  
-    endividamento_ok = endividamento <= 3.0
+    cotacao = dados["cotacao"]
+    patrimonio = dados["patrimonio_liq"]
+    num_acoes = dados["num_acoes"]
+    div_br_patrim = dados["div_br_patrim"]
+    dividend_yield = dados["div_yield"]
 
-    # 3. Dividend Yield >= 6%
-    dy = dados["div_yield"]  
-    dy_ok = dy >= 0.06
+    # Valor patrimonial por ação
+    vpa = patrimonio / num_acoes if num_acoes else 0
 
-    # Recomendação final
+    # Endividamento
+    endividamento = div_br_patrim
+
+    # Regras
+    vpa_ok = cotacao <= 1.5 * vpa
+    endividamento_ok = endividamento <= 3
+    dy_ok = dividend_yield >= 0.06
+
     comprar = vpa_ok and endividamento_ok and dy_ok
+
+    if comprar:
+        recomendacao = "Ação dentro dos critérios — possível oportunidade."
+    else:
+        recomendacao = "Ação não atende todos os critérios."
 
     return {
         "vpa": vpa,
         "vpa_ok": vpa_ok,
         "endividamento": endividamento,
         "endividamento_ok": endividamento_ok,
-        "dividend_yield": dy,
+        "dividend_yield": dividend_yield,
         "dy_ok": dy_ok,
         "comprar": comprar,
-        "recomendacao": "✅ COMPRA" if comprar else "❌ NÃO RECOMENDADO",
+        "recomendacao": recomendacao,
     }
