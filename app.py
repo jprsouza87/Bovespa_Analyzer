@@ -164,7 +164,6 @@ if st.button("Analisar", use_container_width=True) and ticker:
                             buttons=list([
                                 dict(count=1, label="1M", step="month", stepmode="backward"),
                                 dict(count=3, label="3M", step="month", stepmode="backward"),
-                                dict(count=6, label="6M", step="month", stepmode="backward"),
                                 dict(step="all", label="Tudo"),
                             ])
                         ),
