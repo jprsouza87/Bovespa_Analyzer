@@ -15,8 +15,14 @@ def analisar(dados: dict) -> dict:
     dy = dados["div_yield"]
     dy_ok = dy >= 0.06
 
-    # Recomendação final
-    comprar = vpa_ok and endividamento_ok and dy_ok
+    # 4. ROE (Return on Equity) >= 15%
+    roe = dados["roe"]
+    roe_ok = roe >= 0.15
+
+    # Recomendação final:
+    # VPA é obrigatório e, além dele, pelo menos 2 dos 3 critérios restantes
+    outros_criterios_ok = sum([endividamento_ok, dy_ok, roe_ok])
+    comprar = vpa_ok and outros_criterios_ok >= 2
 
     return {
         "vpa":              vpa,
@@ -25,6 +31,8 @@ def analisar(dados: dict) -> dict:
         "endividamento_ok": endividamento_ok,
         "dividend_yield":   dy,
         "dy_ok":            dy_ok,
+        "roe":              roe,
+        "roe_ok":           roe_ok,
         "comprar":          comprar,
         "recomendacao":     "✅ COMPRA" if comprar else "❌ NÃO RECOMENDADO",
     }

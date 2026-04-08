@@ -6,7 +6,7 @@ Aplicação web para análise fundamentalista de ações listadas na B3 (Bolsa d
 
 ## 🖥️ Demonstração
 
-> Busca por nome de empresa ou código direto, análise dos 3 critérios fundamentalistas e gráfico interativo de preços dos últimos 6 meses.
+> Busca por nome de empresa ou código direto, análise dos 4 critérios fundamentalistas com VPA obrigatório e gráfico interativo de preços dos últimos 12 meses.
 
 ---
 
@@ -23,8 +23,9 @@ Projeto desenvolvido para praticar integração de múltiplas fontes de dados fi
 | **Valor Patrimonial (VPA)** | Cotação ≤ 1,5x o VPA | Ação não está sobrevalorizada em relação ao patrimônio contábil |
 | **Endividamento** | Dívida Bruta ≤ 3x o Patrimônio Líquido | Empresa com alavancagem controlada |
 | **Dividend Yield** | DY ≥ 6% | Boa distribuição de lucros aos acionistas |
+| **ROE** | ROE ≥ 15% | Indica boa eficiência na geração de lucro com o capital próprio |
 
-A recomendação de **COMPRA** é emitida somente quando os 3 critérios são atendidos simultaneamente.
+A recomendação de **COMPRA** é emitida somente quando o critério de **VPA** é atendido e, além dele, pelo menos 2 dos 3 critérios restantes também são atendidos.
 
 ---
 

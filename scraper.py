@@ -57,6 +57,7 @@ def buscar_dados(ticker: str) -> dict:
     shares     = info.get("sharesOutstanding")
     total_debt = info.get("totalDebt", 0) or 0
     div_yield  = info.get("dividendYield", 0) or 0
+    roe        = info.get("returnOnEquity", 0) or 0
 
     if not book_value or not shares:
         raise ValueError(f"Dados insuficientes para '{ticker}'.")
@@ -71,9 +72,10 @@ def buscar_dados(ticker: str) -> dict:
         "num_acoes":      shares,
         "div_br_patrim":  div_br_patrim,
         "div_yield":      div_yield / 100 if div_yield > 1 else div_yield,
+        "roe":            roe / 100 if roe > 1 else roe,
     }
 
 
 def buscar_historico(ticker: str):
     t = yf.Ticker(f"{ticker.upper()}.SA")
-    return t.history(period="6mo")
+    return t.history(period="12mo")

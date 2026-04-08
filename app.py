@@ -20,7 +20,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("## 📊 Analisador Fundamentalista — B3")
-st.caption("Análise baseada em Valor Patrimonial, Endividamento e Dividend Yield")
+st.caption("Análise baseada em VPA obrigatório, Endividamento, Dividend Yield e ROE")
 st.divider()
 
 # --- Inicializa session_state ---
@@ -88,10 +88,10 @@ if st.button("Analisar", use_container_width=True) and ticker:
 
             st.divider()
 
-            # --- Critérios ---
-            col4, col5, col6 = st.columns(3)
+            # --- Critérios (2x2 grid) ---
+            col1, col2 = st.columns(2)
 
-            with col4:
+            with col1:
                 icone = "✅" if r["vpa_ok"] else "❌"
                 status = "Atendido" if r["vpa_ok"] else "Não atendido"
                 st.markdown(f"""
@@ -102,7 +102,7 @@ if st.button("Analisar", use_container_width=True) and ticker:
                 """, unsafe_allow_html=True)
                 st.caption(f"Cotação R\\$ {dados['cotacao']:.2f} | VPA R\\$ {dados['vpa']:.2f}")
 
-            with col5:
+            with col2:
                 icone = "✅" if r["endividamento_ok"] else "❌"
                 status = "Atendido" if r["endividamento_ok"] else "Não atendido"
                 st.markdown(f"""
@@ -113,7 +113,9 @@ if st.button("Analisar", use_container_width=True) and ticker:
                 """, unsafe_allow_html=True)
                 st.caption(f"{r['endividamento']:.2f}x patrimônio — limite 3,0x")
 
-            with col6:
+            col3, col4 = st.columns(2)
+
+            with col3:
                 icone = "✅" if r["dy_ok"] else "❌"
                 status = "Atendido" if r["dy_ok"] else "Não atendido"
                 st.markdown(f"""
@@ -123,6 +125,17 @@ if st.button("Analisar", use_container_width=True) and ticker:
                     </div>
                 """, unsafe_allow_html=True)
                 st.caption(f"{r['dividend_yield']*100:.1f}% — mínimo 6,0%")
+
+            with col4:
+                icone = "✅" if r["roe_ok"] else "❌"
+                status = "Atendido" if r["roe_ok"] else "Não atendido"
+                st.markdown(f"""
+                    <div style="background:#1a1d27;border:1px solid #2a2d3a;border-radius:8px;padding:1rem;">
+                        <div style="font-size:0.75rem;color:#888;margin-bottom:0.4rem;">ROE</div>
+                        <div style="font-size:1.1rem;color:#e0e0e0;">{icone} {status}</div>
+                    </div>
+                """, unsafe_allow_html=True)
+                st.caption(f"{r['roe']*100:.1f}% — mínimo 15,0%")
 
             st.divider()
 
@@ -135,7 +148,7 @@ if st.button("Analisar", use_container_width=True) and ticker:
             st.divider()
 
             # --- Gráfico ---
-            st.markdown(f"#### 📈 Histórico de preços — {ticker.upper()} (últimos 6 meses)")
+            st.markdown(f"#### 📈 Histórico de preços — {ticker.upper()} (últimos 12 meses)")
             hist = buscar_historico(ticker)
 
             if not hist.empty:
@@ -164,7 +177,8 @@ if st.button("Analisar", use_container_width=True) and ticker:
                             buttons=list([
                                 dict(count=1, label="1M", step="month", stepmode="backward"),
                                 dict(count=3, label="3M", step="month", stepmode="backward"),
-                                dict(step="all", label="Tudo"),
+                                dict(count=6, label="6M", step="month", stepmode="backward"),
+                                dict(count=12, label="12M", step="month", stepmode="backward"),
                             ])
                         ),
                         rangeslider=dict(
