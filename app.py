@@ -202,3 +202,8 @@ if st.button("Analisar", use_container_width=True) and ticker:
             import traceback
             st.error(str(e))
             st.code(traceback.format_exc())
+
+st.markdown(
+    "<div style='margin-top: 1.5rem; text-align: right; color: #666; font-size: 0.75rem;'>desenvolvido por João Paulo R. de Souza</div>",
+    unsafe_allow_html=True
+)
