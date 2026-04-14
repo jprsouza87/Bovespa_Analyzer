@@ -1,6 +1,6 @@
 import streamlit as st
 import plotly.graph_objects as go
-from scraper import buscar_dados, buscar_por_nome, buscar_historico
+from scraperfd import buscar_dados, buscar_por_nome, buscar_historico
 from analyzer import analisar
 
 st.set_page_config(
